@@ -36,45 +36,50 @@ def get_apartment_details(url):
     price = re.search('price":"(.*?)"', soupString)
     rooms = re.search('rooms":"(.*?)"', soupString)
 
-    print("This is apartment in " + post_code.group(1) + ", with " +
-          rooms.group(1) + " rooms, price is " + price.group(1) + "." + url)
+    try:
+        print("This is apartment in " + post_code.group(1) + ", with " +
+              rooms.group(1) + " rooms, price is " + price.group(1) + "." + url)
+    except AttributeError:
+        print("x")
 
     return post_code.group(1), price.group(1), rooms.group(1)
 
 
 graz_apartment_links = []
 
-fp = urllib.request.urlopen(
-    "https://www.willhaben.at/iad/immobilien/eigentumswohnung/eigentumswohnung-angebote?&rows=100&areaId=601&parent_areaid=6")
+page_count = 1
 
-mybytes = fp.read()
-mystr = mybytes.decode("ISO-8859-1")
-fp.close()
+for i in range(1, 4):
+    fp = urllib.request.urlopen(
+        "https://www.willhaben.at/iad/immobilien/eigentumswohnung/eigentumswohnung-angebote?&rows=100&areaId=601&parent_areaid=6")
 
-soup = BeautifulSoup(mystr, 'html.parser')
+    mybytes = fp.read()
+    mystr = mybytes.decode("ISO-8859-1")
+    fp.close()
 
-for link in soup.find_all('a'):
-    url = link.get('href')
+    soup = BeautifulSoup(mystr, 'html.parser')
 
-    if url != "#" and url != None and url.startswith(("/iad/immobilien/d/eigentumswohnung/steiermark/graz/")):
-        graz_apartment_links.append("https://www.willhaben.at" + url)
+    for link in soup.find_all('a'):
+        url = link.get('href')
 
-# write also to csv
-f = open('csv_test.csv', 'w', newline='')
-writer = csv.writer(f)
+        if url != "#" and url != None and url.startswith(("/iad/immobilien/d/eigentumswohnung/steiermark/graz/")):
+            graz_apartment_links.append("https://www.willhaben.at" + url)
 
-# write also in sqlite db
-db = create_connection('scraper_data.db')
-cursor = db.cursor()
+    # write also to csv
+    f = open('csv_test.csv', 'w', newline='')
+    writer = csv.writer(f)
 
+    # write also in sqlite db
+    db = create_connection('scraper_data.db')
+    cursor = db.cursor()
 
-for url in graz_apartment_links:
-    post_code, price, rooms = get_apartment_details(url)
-    combined = post_code + ',' + price + ',' + rooms + ',' + url
-    writer.writerow([combined])
-    count = cursor.execute("INSERT INTO immobuy(zip, price, rooms, url) VALUES(?,?,?,?)", (
-        post_code, price, rooms, url))
-    db.commit()
+    for url in graz_apartment_links:
+        post_code, price, rooms = get_apartment_details(url)
+        combined = post_code + ',' + price + ',' + rooms + ',' + url
+        writer.writerow([combined])
+        count = cursor.execute("INSERT INTO immobuy(zip, price, rooms, url) VALUES(?,?,?,?)", (
+            post_code, price, rooms, url))
+        db.commit()
 
 # close file
 f.close()
