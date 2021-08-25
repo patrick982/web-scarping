@@ -52,7 +52,7 @@ graz_apartment_links = []
 
 for i in range(1, 4):
     fp = urllib.request.urlopen(
-        "https://www.willhaben.at/iad/immobilien/eigentumswohnung/steiermark/graz/?rows=5&page=" + str(i))
+        "https://www.willhaben.at/iad/immobilien/eigentumswohnung/eigentumswohnung-angebote?rows=5&sfId=d4217f20-4c20-4a19-9637-716224555df5&parent_areaid=6&areaId=601&isNavigation=true&NO_OF_ROOMS_BUCKET=4X4&page=" + str(i))
 
     mybytes = fp.read()
     mystr = mybytes.decode("ISO-8859-1")
