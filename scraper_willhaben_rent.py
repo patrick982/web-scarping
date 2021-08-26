@@ -37,22 +37,22 @@ def get_apartment_details(url):
     soupString = str(soup)
 
     post_code = re.search('post_code":"(.*?)"', soupString)
-    price = re.search('price":"(.*?)"', soupString)
+    rent = re.search('price":"(.*?)"', soupString)
     rooms = re.search('rooms":"(.*?)"', soupString)
     timestamp = datetime.now()
     date = Date.today()
 
     print("This is apartment in " + post_code.group(1) + ", with " +
-          rooms.group(1) + " rooms, price is " + price.group(1) + "." + " " + url)
+          rooms.group(1) + " rooms, price is " + rent.group(1) + "." + " " + url)
 
-    return post_code.group(1), price.group(1), rooms.group(1), timestamp, date
+    return post_code.group(1), rent.group(1), rooms.group(1), timestamp, date
 
 
 graz_apartment_links = []
 
 for i in range(1, 5):
     fp = urllib.request.urlopen(
-        "https://www.willhaben.at/iad/immobilien/eigentumswohnung/eigentumswohnung-angebote?rows=5&sfId=d4217f20-4c20-4a19-9637-716224555df5&parent_areaid=6&areaId=601&isNavigation=true&NO_OF_ROOMS_BUCKET=4X4&page=" + str(i))
+        "https://www.willhaben.at/iad/immobilien/mietwohnungen/mietwohnung-angebote?sfId=e16235c5-754e-4548-9e0f-b5316086ef99&isNavigation=true&NO_OF_ROOMS_BUCKET=3X3&areaId=601&rows=5&ESTATE_PREFERENCE=15&page=" + str(i))
 
     mybytes = fp.read()
     mystr = mybytes.decode("ISO-8859-1")
@@ -64,7 +64,7 @@ for i in range(1, 5):
     for link in soup.find_all('a'):
         url = link.get('href')
 
-        if url != "#" and url != None and url.startswith(("/iad/immobilien/d/eigentumswohnung/steiermark/graz/")):
+        if url != "#" and url != None and url.startswith(("/iad/immobilien/d/mietwohnungen/steiermark/graz/")):
             graz_apartment_links.append("https://www.willhaben.at" + url)
 
     # write also to csv
@@ -77,12 +77,12 @@ for i in range(1, 5):
 
     for url in graz_apartment_links:
         try:
-            post_code, price, rooms, timestamp, date = get_apartment_details(
+            post_code, rent, rooms, timestamp, date = get_apartment_details(
                 url)
-            combined = post_code + ',' + price + ',' + rooms + ',' + url
+            combined = post_code + ',' + rent + ',' + rooms + ',' + url
             writer.writerow([combined])
-            count = cursor.execute("INSERT INTO immobuy(zip, price, rooms, url, timestamp, date) VALUES(?,?,?,?,?,?)", (
-                post_code, price, rooms, url, timestamp, date))
+            count = cursor.execute("INSERT INTO immorent(zip, rent, rooms, url, timestamp, date) VALUES(?,?,?,?,?,?)", (
+                post_code, rent, rooms, url, timestamp, date))
             db.commit()
         except:
             continue
