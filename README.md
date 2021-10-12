@@ -13,17 +13,18 @@ Nevertheless this tool should help you find current pricing and tracking of them
 ### Dependencies
 
 the program is written in Python 3
-
-- from os import error
-- from sqlite3.dbapi2 import Connection, Cursor, Date, connect
-- from bs4 import BeautifulSoup
-- import urllib.request
-- import re
-- import sqlite3
-- import csv
-- import time
-- from datetime import datetime
-- from datetime import date
+```
+from os import error
+from sqlite3.dbapi2 import Connection, Cursor, Date, connect
+from bs4 import BeautifulSoup
+import urllib.request
+import re
+import sqlite3
+import csv
+import time
+from datetime import datetime
+from datetime import date
+```
 
 you can run the programm from any platform that support pyhton and sqlite3
 
