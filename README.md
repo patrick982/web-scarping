@@ -61,5 +61,5 @@ This project is licensed under the MIT License - see the LICENSE.md file for det
 ## Acknowledgments
 
 Inspiration, code snippets, etc.
-* the programm ist definitely inspired by some project I found on the and I give credits where needed. But I am still searching for the source to mention it here.
+* the programm ist definitely inspired by some project I found on the internet and I give credits where needed. But I am still searching for the source to mention it here.
 
