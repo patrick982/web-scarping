@@ -12,53 +12,53 @@ Nevertheless this tool should help you find current pricing and tracking of them
 
 ### Dependencies
 
-* Describe any prerequisites, libraries, OS version, etc., needed before installing program.
-* ex. Windows 10
+the program is written in Python 3
+
+- from os import error
+- from sqlite3.dbapi2 import Connection, Cursor, Date, connect
+- from bs4 import BeautifulSoup
+- import urllib.request
+- import re
+- import sqlite3
+- import csv
+- import time
+- from datetime import datetime
+- from datetime import date
+
+you can run the programm from any platform that support pyhton and sqlite3
 
 ### Installing
 
-* How/where to download your program
-* Any modifications needed to be made to files/folders
+- install the dependencies via pip install
+- sqlite3 maybe some db reader application
+- some .csv reader for testing functionalities (if needed or interested) 
 
 ### Executing program
 
-* How to run the program
-* Step-by-step bullets
-```
-code blocks for commands
-```
+just run the scraper_willhaben.py
+or
+scraper_willhaben_rent.py
+
+depending on your interest for buying or renting something
 
 ## Help
-
-Any advise for common problems or issues.
-```
-command to run if program contains helper info
-```
+you can email me if you need anything regarding this repo
 
 ## Authors
 
-Contributors names and contact info
-
-ex. Dominique Pizzie  
-ex. [@DomPizzie](https://twitter.com/dompizzie)
+Patrick Stampler
 
 ## Version History
 
-* 0.2
-    * Various bug fixes and optimizations
-    * See [commit change]() or See [release history]()
 * 0.1
     * Initial Release
 
 ## License
 
-This project is licensed under the [NAME HERE] License - see the LICENSE.md file for details
+This project is licensed under the MIT License - see the LICENSE.md file for details
 
 ## Acknowledgments
 
 Inspiration, code snippets, etc.
-* [awesome-readme](https://github.com/matiassingers/awesome-readme)
-* [PurpleBooth](https://gist.github.com/PurpleBooth/109311bb0361f32d87a2)
-* [dbader](https://github.com/dbader/readme-template)
-* [zenorocha](https://gist.github.com/zenorocha/4526327)
-* [fvcproductions](https://gist.github.com/fvcproductions/1bfc2d4aecb01a834b46)
+* the programm ist definitely inspired by some project I found on the and I give credits where needed. But I am still searching for the source to mention it here.
+
